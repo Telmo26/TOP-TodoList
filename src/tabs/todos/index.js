@@ -1,65 +1,5 @@
 import "./style.css";
-
-
-class Todo {
-    constructor(title, description, dueDate, priority) {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-    }
-}
-
-class Project {
-    #todos = [new Todo("test1", "description test1", new Date(), 0), new Todo("test2", "description test2", new Date(), 1), new Todo("test2", "description test2", new Date(), 1), new Todo("test2", "description test2", new Date(), 1)];
-    #name;
-
-    constructor(name) {
-        this.#name = name;
-    }
-
-    addTodo(todo) {
-        this.#todos.push(todo);
-    }
-
-    removeTodo(todo) {
-        for (let index in this.#todos) {
-            if (this.#todos[index] == todo) {
-                this.#todos.splice(index, 1);
-            }
-        };
-    }
-
-    get name() {
-        return this.#name;
-    }
-
-    get todos() {
-        return this.#todos;
-    }
-}
-
-const todosData = new class {
-    #projects = [new Project("test1"), new Project("test2")];
-    selectIndex = 0;
-
-    newProject(name) {
-        this.#projects.push(new Project(name));
-    }
-
-    deleteProject() {
-        this.#projects.splice(this.selectIndex, 1);
-        this.selectIndex = 0;
-    }
-
-    get selectedProject() {
-        return this.#projects[this.selectIndex];
-    }
-
-    get projects() {
-        return this.#projects
-    }
-}
+import { todosData, Todo } from "./data.js";
 
 export const todosDisplayController = new class {
     #data;
@@ -134,8 +74,8 @@ export const todosDisplayController = new class {
         const todosContainer = document.createElement("div");
         todosContainer.classList.add("todos");
 
-        if (this.#data.selectedProject) {
-            for (let todo of this.#data.selectedProject.todos) {
+        if (this.#data.selectedIndex !== null) {
+            for (let todo of this.#data.todos) {
                 const todoDiv = document.createElement("div");
                 todoDiv.classList.add("todo");
                 {
@@ -156,7 +96,7 @@ export const todosDisplayController = new class {
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-forever</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8.46,11.88L9.87,10.47L12,12.59L14.12,10.47L15.53,11.88L13.41,14L15.53,16.12L14.12,17.53L12,15.41L9.88,17.53L8.47,16.12L10.59,14L8.46,11.88M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>
                     `
                     deleteButton.addEventListener("click", () => {
-                        this.#data.selectedProject.removeTodo(todo);
+                        this.#data.removeTodo(todo);
                         this.display(content);
                     });
 
@@ -172,18 +112,18 @@ export const todosDisplayController = new class {
     #createSelect() {
         const select = document.createElement("select");
 
-        for (let index in this.#data.projects) {
+        for (let index in this.#data.projectNames) {
             const option = document.createElement("option");
             option.value = index;
-            option.textContent = this.#data.projects[index].name;
+            option.textContent = this.#data.projectNames[index];
             select.appendChild(option);
         }
 
-        select.value = this.#data.selectIndex;
+        select.value = this.#data.selectedIndex;
 
         select.addEventListener("change", (e) => {
             const projectIndex = e.target.value;
-            this.#data.selectIndex = projectIndex;
+            this.#data.selectedIndex = projectIndex;
 
             this.display(content);
             
@@ -224,7 +164,7 @@ export const todosDisplayController = new class {
                 const formData = new FormData(form);
 
                 const todo = new Todo(formData.get("todo_title"), formData.get("todo_description"), new Date(formData.get("todo_due_date")), formData.get("todo_priority"));
-                this.#data.selectedProject.addTodo(todo);
+                this.#data.addTodo(todo);
 
                 this.display(content);
             })
