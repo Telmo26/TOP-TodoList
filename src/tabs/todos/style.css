@@ -1,0 +1,110 @@
+.todos-container {
+    height: calc(100% - 2rem);
+    margin: 1rem;
+    padding: 2rem;
+
+    display: grid;
+    grid-template-rows: min-content 1fr min-content;
+    gap: 2rem;
+
+    background-color: white;
+    border-radius: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.todos-container .project-selector {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 1.5rem;
+
+    > select {
+        width: 100%;
+        font-size: 1.5rem;
+        padding-left: 1rem;
+        border-radius: 3rem;
+    }
+
+    > button {
+        padding: 0.25rem 1rem;
+        border-radius: 2em;
+        border: none;
+        background-color: var(--solid-blue);
+        color: white;
+        font-size: 1rem;
+    }
+}
+
+.todos-container .todos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: min-content;
+    gap: 2rem;
+
+    .todo {
+        display: grid;
+        grid-auto-rows: min-content;
+        gap: 0.5rem;
+
+        padding: 1rem;
+        background-color: antiquewhite;
+        border-radius: 2rem;
+        box-shadow: var(--shadow);
+
+        button {
+            justify-self: right;
+            height: auto;
+            width: min-content;
+            background: none;
+            border: none;
+        }
+
+        svg {
+            height: 2rem;
+        }
+    }
+}
+
+.todos-container .new-todo {
+    display: flex;
+    flex-direction: row-reverse;
+    
+    > button {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: xx-large;
+        background-color: var(--solid-blue);
+        color: white;
+        border: none;
+        border-radius: 2rem;
+        box-shadow: var(--shadow);
+    }
+}
+
+.todos-container dialog {
+    margin: auto;
+    border: none;
+    padding: 2rem;
+    border-radius: 2rem;
+}
+
+.todos-container dialog form {
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+
+    input {
+        border: 1px solid black;
+        padding-left: 0.5rem;
+        border-radius: 2rem;
+    }
+
+    button {
+        width: min-content;
+        padding: 0.5rem 1rem;
+        background-color: var(--solid-blue);
+        color: white;
+        border: none;
+        border-radius: 2rem;
+    }
+}
