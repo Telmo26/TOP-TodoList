@@ -1,5 +1,6 @@
 import "./style.css";
 import { todosData, Todo } from "./data.js";
+import { format } from "date-fns";
 
 export const todosDisplayController = new class {
     #data;
@@ -86,7 +87,7 @@ export const todosDisplayController = new class {
                     if (todo.description) desc.textContent = todo.description;
 
                     const dueDate = document.createElement("p");
-                    if (todo.dueDate != "Invalid Date") dueDate.textContent = "Due date: " + todo.dueDate;
+                    if (todo.dueDate != "Invalid Date") dueDate.textContent = "Due date: " + format(todo.dueDate, "dd-MM-yyyy HH:MM");
 
                     const priority = document.createElement("p");
                     if (todo.priority) priority.textContent = "Priority: " + todo.priority;

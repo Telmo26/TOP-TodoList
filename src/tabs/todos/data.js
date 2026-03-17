@@ -7,7 +7,8 @@ export class Todo {
     }
 
     static fromJSON(json) {
-        const dueDate = new Date(json.dueDate);
+        console.log(json.dueDate);
+        const dueDate = json.dueDate === null ? "Invalid Date" : new Date(json.dueDate);
         return new Todo(json.title, json.description, dueDate, json.priority);
     }
 }

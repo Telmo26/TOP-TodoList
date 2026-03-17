@@ -1,0 +1,13 @@
+.home-container {
+    height: calc(100% - 2rem);
+    margin: 1rem;
+    padding: 2rem;
+
+    display: grid;
+    grid-auto-rows: min-content;
+    gap: 2rem;
+
+    background-color: white;
+    border-radius: 2rem;
+    box-shadow: var(--shadow);
+}
